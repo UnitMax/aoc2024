@@ -5,8 +5,6 @@ f = open("day2real.txt", "r")
 content = f.read()
 f.close()
 
-# print(content)
-
 lines = content.split("\n")
 
 def line_safe(input):
@@ -19,18 +17,9 @@ def line_safe(input):
         diff = num - n
         if diff == 0 or abs(diff) > 3:
             return False
-        if should_increase:
-            if diff > 0:
-                return False
-            else:
-                num = n
-                continue
-        else:
-            if diff < 0:
-                return False
-            else:
-                num = n
-                continue
+        if (should_increase and diff > 0) or (not should_increase and diff < 0):
+            return False
+        num = n
     return True
 
 def permutate_line(line):
