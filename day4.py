@@ -17,13 +17,9 @@ def search_direction_xmas(input, startx, starty, dirx, diry, maxx, maxy, step):
     newchar = input[newy][newx]
     match step:
         case 2:
-            if newchar == 'M':
-                return search_direction_xmas(input, newx, newy, dirx, diry, maxx, maxy, step + 1)
-            return False
+            return search_direction_xmas(input, newx, newy, dirx, diry, maxx, maxy, step + 1) if newchar == 'M' else False
         case 3:
-            if newchar == 'A':
-                return search_direction_xmas(input, newx, newy, dirx, diry, maxx, maxy, step + 1)
-            return False
+            return search_direction_xmas(input, newx, newy, dirx, diry, maxx, maxy, step + 1) if newchar == 'A' else False
         case 4:
             return newchar == 'S'
         case _:
