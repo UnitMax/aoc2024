@@ -1,9 +1,9 @@
-import math
+import sys
 
 print("AOC Day 06")
 print("==========")
 
-f = open("day6test.txt", "r")
+f = open("day6real.txt", "r")
 content = f.read()
 f.close()
 
@@ -60,50 +60,59 @@ for l in lines:
     cy += 1
 
 def traverse(grid, maxx, maxy, sx, sy, dx, dy, subtotal):
-    nx = sx + dx
-    ny = sy + dy
-    if nx >= maxx or ny >= maxy or nx < 0 or ny < 0:
-        return subtotal
-    c = grid[ny][nx]
-    v = visited[ny][nx]
-    addv = 1 if v == 0 else 0
-    if c == '.':
-        visited[ny][nx] = 1
-        return traverse(grid, maxx, maxy, nx, ny, dx, dy, subtotal + addv)
-    elif c == '#':
-        visited[ny][nx] = 1 
-        ndx = 0
-        ndy = 1
-        if dx == 1: # right
-            # now down
+    nx = sx
+    ny = sy
+    while not (nx >= maxx or ny >= maxy or nx < 0 or ny < 0):
+        c = grid[ny][nx]
+        v = visited[ny][nx]
+        addv = 1 if v == 0 else 0
+        if c == '.':
+            visited[ny][nx] = 1
+            subtotal += addv
+        elif c == '#':
+            visited[ny][nx] = 1 
+            nx -= dx
+            ny -= dy
             ndx = 0
             ndy = 1
-        elif dy == 1: # down
-            # now left
-            ndx = -1
-            ndy = 0
-        elif dx == -1: # left
-            # now up
-            ndx = 0
-            ndy = -1
-        elif dy == -1: # up
-            # now right
-            ndx = 1
-            ndy = 0
+            if dx == 1: # right
+                # now down
+                ndx = 0
+                ndy = 1
+            elif dy == 1: # down
+                # now left
+                ndx = -1
+                ndy = 0
+            elif dx == -1: # left
+                # now up
+                ndx = 0
+                ndy = -1
+            elif dy == -1: # up
+                # now right
+                ndx = 1
+                ndy = 0
+            else:
+                raise Exception("this can never happen")
+            
+            dx = ndx
+            dy = ndy
         else:
-            raise Exception("Again, what is happening here?")
+            raise Exception("this can never happen")
         
-        return traverse(grid, maxx, maxy, sx + ndx, sy + ndy, ndx, ndy, subtotal + addv)
-    else:
-        raise Exception("this should not happen")
+        nx += dx
+        ny += dy
+    return subtotal
 
 print(sx, sy, sdx, sdy)
 
-dist_pos = traverse(grid, len(grid[0]), len(grid), sx, sy, sdx, sdy, 0)
+dist_pos = traverse(grid, len(grid[0]), len(grid), sx, sy, sdx, sdy, 1)  # 1 for the start
 
 for vp in visited:
     for vpi in vp:
-        print(vpi, end='')
+        if vpi == 0:
+            print('.', end='')
+        else:
+            print('X', end='')
     print("")
 
 print(grid)
