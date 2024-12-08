@@ -1,5 +1,3 @@
-import sys
-
 print("AOC Day 06")
 print("==========")
 
@@ -103,8 +101,6 @@ def traverse(grid, maxx, maxy, sx, sy, dx, dy, subtotal):
         ny += dy
     return subtotal
 
-print(sx, sy, sdx, sdy)
-
 dist_pos = traverse(grid, len(grid[0]), len(grid), sx, sy, sdx, sdy, 1)  # 1 for the start
 
 for vp in visited:
@@ -115,6 +111,5 @@ for vp in visited:
             print('X', end='')
     print("")
 
-print(grid)
 print("===")
 print("Part 1, distinct positions = ", dist_pos)
