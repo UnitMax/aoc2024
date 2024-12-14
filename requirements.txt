@@ -1,6 +1,7 @@
 absl-py==2.1.0
 immutabledict==4.2.1
 numpy==2.2.0
+opencv-python==4.10.0.84
 ortools==9.11.4210
 pandas==2.2.3
 protobuf==5.26.1
