@@ -73,19 +73,7 @@ print("Part 1, safety score =", get_score(grid1))
 num_edges = []
 for s in range(0, 10000):
     grid = empty_grid()
-    sec = s + 1
-    for line in content.split("\n"):
-        match = re.search(r"p=(-?[0-9]+,-?[0-9]+) v=(-?[0-9]+,-?[0-9]+)$", line)
-        if not match:
-            continue
-        p_coords = match.group(1).split(",")
-        v_coords = match.group(2).split(",")
-        px = int(p_coords[0])
-        py = int(p_coords[1])
-        vx = int(v_coords[0])
-        vy = int(v_coords[1])
-
-        move(grid, px, py, vx, vy, sec)
+    transform_grid(grid, s + 1)
     num_edges.append(find_edges(np.array(grid)))
 
 # Tree should be the "image" with the least number of edges because all numbers
